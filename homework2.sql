@@ -18,12 +18,12 @@ ORDER BY O.OrderID, C.ContactName, P.ProductName;
 
 /*SELECT O.OrderID, C.ContactName, P.ProductName, OD.UnitPrice, OD.Quantity
 FROM orders AS O
-         inner join customers as C
+         INNER JOIN customers as C
                     on C.CustomerID = O.CustomerID
-         inner join `order details` AS OD
+         INNER JOIN `order details` AS OD
                     on O.OrderID = OD.OrderID
-         inner join products AS P
-                    on OD.ProductID = P.ProductID
+         INNER JOIN products AS P
+                    ON OD.ProductID = P.ProductID
 WHERE EXTRACT(YEAR FROM O.OrderDate) = 1996
   AND C.Country = 'France'
 ORDER BY O.OrderID, C.ContactName, P.ProductName;*/
@@ -32,6 +32,13 @@ ORDER BY O.OrderID, C.ContactName, P.ProductName;*/
 (Description) για όσα προϊόντα έχουν λιγότερες από 75% μονάδες σε στοκ
 (UnitsInStock) από μονάδες σε παραγγελία (UnitsOnOrder), ταξινομημένες κατά
 όνομα προϊόντος.*/
+
+SELECT P.ProductName, C.Description
+FROM products AS P,
+     categories AS C
+WHERE P.CategoryID = C.CategoryID
+  AND P.UnitsOnOrder - P.UnitsInStock < 75
+GROUP BY P.ProductName;
 
 /*3. Για κάθε πελάτη που συμμετέχει σε περισσότερες από 10 παραγγελίες να βρεθεί
 ο κωδικός του πελάτη (CustomerId), το όνομά του (ContactName) και το πλήθος των
