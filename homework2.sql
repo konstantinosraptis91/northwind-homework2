@@ -4,6 +4,30 @@
 χώρα ‘France’, ταξινομημένες κατά κωδικό παραγγελίας, όνομα πελάτη και όνομα
 προϊόντος.*/
 
+SELECT O.OrderID, C.ContactName, P.ProductName, OD.UnitPrice, OD.Quantity
+FROM orders AS O,
+     customers AS C,
+     products AS P,
+     `order details` AS OD
+WHERE C.CustomerID = O.CustomerID
+  AND P.ProductID = OD.ProductID
+  AND O.OrderID = OD.OrderID
+  AND EXTRACT(YEAR FROM O.OrderDate) = 1996
+  AND C.Country = 'France'
+ORDER BY O.OrderID, C.ContactName, P.ProductName;
+
+/*SELECT O.OrderID, C.ContactName, P.ProductName, OD.UnitPrice, OD.Quantity
+FROM orders AS O
+         inner join customers as C
+                    on C.CustomerID = O.CustomerID
+         inner join `order details` AS OD
+                    on O.OrderID = OD.OrderID
+         inner join products AS P
+                    on OD.ProductID = P.ProductID
+WHERE EXTRACT(YEAR FROM O.OrderDate) = 1996
+  AND C.Country = 'France'
+ORDER BY O.OrderID, C.ContactName, P.ProductName;*/
+
 /*2. Βρείτε όνομα προϊόντος (ProductName) και όνομα κατηγορίας στην οποία ανήκει
 (Description) για όσα προϊόντα έχουν λιγότερες από 75% μονάδες σε στοκ
 (UnitsInStock) από μονάδες σε παραγγελία (UnitsOnOrder), ταξινομημένες κατά
